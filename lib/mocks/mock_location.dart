@@ -1,11 +1,12 @@
 import '../models/location.dart';
 import '../models/location_fact.dart';
+import 'package:http/http.dart' as http;
 
 mixin MockLocation implements Location {
   static Location FetchAny() {
     return Location(
         name: 'Arashiyama Bamboo Grove, Kyoto, Japan',
-        url: 'https://cdn-images-1.medium.com/max/2000/1*vdJuSUKWl_SA9Lp-32ebnA.jpeg',
+        url: 'https://dpvr8cthj0mc3.cloudfront.net/flutter_testing.png',
         facts: <LocationFact>[
           LocationFact(
               title: 'Summary',
