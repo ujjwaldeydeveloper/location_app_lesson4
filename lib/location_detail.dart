@@ -16,10 +16,12 @@ class LocationDetail extends StatelessWidget {
             style: Style.hearderLarge,
           ),
         ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: _renderBody(context, location),
+        body: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: _renderBody(context, location),
+          ),
         ));
   }
 
