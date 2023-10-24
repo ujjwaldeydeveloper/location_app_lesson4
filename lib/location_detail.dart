@@ -8,7 +8,7 @@ class LocationDetail extends StatefulWidget {
   const LocationDetail(this.locationID, {super.key});
 
   @override
-  State<LocationDetail> createState() => _LocationDetailState(this.locationID);
+  State<LocationDetail> createState() => _LocationDetailState(locationID);
 }
 
 class _LocationDetailState extends State<LocationDetail> {
@@ -24,7 +24,7 @@ class _LocationDetailState extends State<LocationDetail> {
   }
 
   loadData() async {
-    final location = await Location.fetchByID(this.locationID);
+    final location = await Location.fetchByID(locationID);
 
     if (mounted) {
       setState(() {
@@ -97,7 +97,6 @@ class _LocationDetailState extends State<LocationDetail> {
         child: Image.network(url, fit: BoxFit.fitWidth),
       );
     } catch (e) {
-      print("could not load image $url");
       return Container();
     }
   }

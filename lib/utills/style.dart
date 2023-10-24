@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class Style {
-
   static const _textSizeLarge = 25.0;
   static const _textSizeDefault = 16.0;
   static final Color _textColorStrong = _hexToColor('000000');
@@ -14,8 +13,6 @@ class Style {
     color: _textColorDefault,
   );
 
-  
-
   static final hearderLarge = TextStyle(
     fontFamily: _fontNameDefault,
     fontSize: _textSizeLarge,
@@ -25,5 +22,4 @@ class Style {
   static Color _hexToColor(String code) {
     return Color(int.parse(code.substring(0, 6), radix: 16) + 0xFF000000);
   }
-
 }

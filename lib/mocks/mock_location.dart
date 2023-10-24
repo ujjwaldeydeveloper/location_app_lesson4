@@ -1,6 +1,5 @@
 import '../models/location.dart';
 import '../models/location_fact.dart';
-import 'package:http/http.dart' as http;
 
 mixin MockLocation implements Location {
   static final List<Location> items = [

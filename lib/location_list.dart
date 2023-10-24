@@ -21,7 +21,7 @@ class _LocationListState extends State<LocationList> {
 
   loadData() async {
     final locations = await Location.fetchAll();
-    if (this.mounted) {
+    if (mounted) {
       setState(() {
         this.locations = locations;
       });
@@ -45,7 +45,7 @@ class _LocationListState extends State<LocationList> {
   }
 
   Widget _listViewItemBuilder(BuildContext context, int index) {
-    final location = this.locations[index];
+    final location = locations[index];
     return ListTile(
       contentPadding: const EdgeInsets.all(10),
       leading: _itemThumbnail(location),
