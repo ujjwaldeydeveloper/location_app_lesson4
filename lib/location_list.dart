@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:lesson4/location_detail.dart';
 import 'models/location.dart';
@@ -12,6 +14,7 @@ class LocationList extends StatefulWidget {
 
 class _LocationListState extends State<LocationList> {
   List<Location> locations = [];
+  bool loading = false;
 
   @override
   void initState() {
@@ -20,10 +23,14 @@ class _LocationListState extends State<LocationList> {
   }
 
   loadData() async {
-    final locations = await Location.fetchAll();
     if (mounted) {
-      setState(() {
-        this.locations = locations;
+      setState(() => loading = true);
+      Timer(const Duration(milliseconds: 4000), () async {
+        final locations = await Location.fetchAll();
+        setState(() {
+          this.locations = locations;
+          loading = false;
+        });
       });
     }
   }
@@ -37,10 +44,29 @@ class _LocationListState extends State<LocationList> {
           style: Style.hearderLarge,
         ),
       ),
-      body: ListView.builder(
-        itemCount: locations.length,
-        itemBuilder: _listViewItemBuilder,
+      body: Column(
+        children: [
+          renderProgressBar(context),
+          Expanded(child: renderListView(context)),
+        ],
       ),
+    );
+  }
+
+  Widget renderProgressBar(BuildContext context) {
+    return loading
+        ? const LinearProgressIndicator(
+            value: null,
+            backgroundColor: Colors.white,
+            valueColor: AlwaysStoppedAnimation<Color>(Colors.grey),
+          )
+        : Container();
+  }
+
+  Widget renderListView(BuildContext context) {
+    return ListView.builder(
+      itemCount: locations.length,
+      itemBuilder: _listViewItemBuilder,
     );
   }
 
