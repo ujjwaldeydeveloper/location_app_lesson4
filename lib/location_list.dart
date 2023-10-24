@@ -17,12 +17,10 @@ class _LocationListState extends State<LocationList> {
   void initState() {
     super.initState();
     loadData();
-    print("CR-> intistate ${locations}");
   }
 
   loadData() async {
     final locations = await Location.fetchAll();
-    print("loadData locations $locations");
     if (this.mounted) {
       setState(() {
         this.locations = locations;
@@ -72,11 +70,10 @@ class _LocationListState extends State<LocationList> {
 
     try {
       return Container(
-        constraints: BoxConstraints.tightFor(height: 100.0),
+        constraints: const BoxConstraints.tightFor(height: 100.0, width: 120),
         child: Image.network(location.url, fit: BoxFit.fitWidth),
       );
     } catch (e) {
-      print("could not load image ${location.url}");
       return Container();
     }
   }
