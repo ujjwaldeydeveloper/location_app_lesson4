@@ -2,6 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:lesson4/location_detail.dart';
+import 'package:lesson4/widgets/banner_image.dart';
+import 'package:lesson4/widgets/default_app_bar.dart';
+import 'package:lesson4/widgets/location_tile.dart';
 import 'models/location.dart';
 import 'utills/style.dart';
 
@@ -39,10 +42,7 @@ class _LocationListState extends State<LocationList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Location',
-          style: Style.hearderLarge,
-        ),
+        title: DefaultAppBar(),
       ),
       body: RefreshIndicator(
         onRefresh: loadData,
@@ -75,11 +75,17 @@ class _LocationListState extends State<LocationList> {
 
   Widget _listViewItemBuilder(BuildContext context, int index) {
     final location = locations[index];
-    return ListTile(
-      contentPadding: const EdgeInsets.all(10),
-      leading: _itemThumbnail(location),
-      title: _itemTitle(location),
+    return GestureDetector(
       onTap: () => _navigationToLocationDetails(context, location.id),
+      child: Container(
+        child: Stack(
+          alignment: Alignment.bottomLeft,
+          children: [
+            BannerImage(location.url, MediaQuery.of(context).size.height * 0.3),
+            _tileFooter(location)
+          ],
+        ),
+      ),
     );
   }
 
@@ -92,25 +98,18 @@ class _LocationListState extends State<LocationList> {
     );
   }
 
-  Widget _itemThumbnail(Location location) {
-    if (location.url.isEmpty) {
-      return Container();
-    }
-
-    try {
-      return Container(
-        constraints: const BoxConstraints.tightFor(height: 100.0, width: 120),
-        child: Image.network(location.url, fit: BoxFit.fitWidth),
-      );
-    } catch (e) {
-      return Container();
-    }
-  }
-
-  Widget _itemTitle(Location location) {
-    return Text(
-      location.name,
-      style: Style.textDefault,
+  Widget _tileFooter(Location location) {
+    final info = LocationTile(location: location, darkTheme: true);
+    final overlay = Container(
+      height: 80.0,
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+      decoration: BoxDecoration(color: Colors.black.withOpacity(0.5)),
+      child: info,
+    );
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.end,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [overlay],
     );
   }
 }

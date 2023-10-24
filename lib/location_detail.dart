@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:lesson4/widgets/banner_image.dart';
 import 'models/location.dart';
 import 'utills/style.dart';
+import 'widgets/default_app_bar.dart';
 
 class LocationDetail extends StatefulWidget {
   final int locationID;
@@ -36,12 +38,7 @@ class _LocationDetailState extends State<LocationDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(
-            location.name,
-            style: Style.hearderLarge,
-          ),
-        ),
+        appBar: DefaultAppBar(),
         body: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -53,7 +50,7 @@ class _LocationDetailState extends State<LocationDetail> {
 
   List<Widget> _renderBody(BuildContext context, Location location) {
     var result = <Widget>[];
-    result.add(_bannerImage(location.url, 170.0));
+    result.add(BannerImage(location.url, 170.0));
     result.addAll(_renderFacts(context, location));
     return result;
   }
@@ -84,20 +81,5 @@ class _LocationDetailState extends State<LocationDetail> {
           text,
           style: Style.textDefault,
         ));
-  }
-
-  Widget _bannerImage(String url, double height) {
-    if (url.isEmpty) {
-      return Container();
-    }
-
-    try {
-      return Container(
-        constraints: BoxConstraints.tightFor(height: height),
-        child: Image.network(url, fit: BoxFit.fitWidth),
-      );
-    } catch (e) {
-      return Container();
-    }
   }
 }

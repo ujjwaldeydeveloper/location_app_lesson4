@@ -8,6 +8,8 @@ mixin MockLocation implements Location {
         name: 'Arashiyama Bamboo Grove',
         url:
             'https://cdn-images-1.medium.com/max/2000/1*vdJuSUKWl_SA9Lp-32ebnA.jpeg',
+        user_itinerary_summary: "Day 1: 2PM - 3:30PM",
+        tour_package_name: "Standard Package",
         facts: <LocationFact>[
           LocationFact(
               title: 'Summary',
@@ -23,6 +25,8 @@ mixin MockLocation implements Location {
         name: 'Mount Fuji',
         url:
             'https://img3.goodfon.ru/original/1920x1080/a/a5/fuji-peizazh-iaponiia-gora-tsvety-nebo.jpg',
+        user_itinerary_summary: "Day 1: 2PM - 3:30PM",
+        tour_package_name: "Standard Package",
         facts: <LocationFact>[
           LocationFact(
               title: 'Summary',
@@ -38,6 +42,8 @@ mixin MockLocation implements Location {
         name: 'Kiyomizu-dera',
         url:
             'https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Kiyomizu-dera_in_Kyoto-r.jpg/800px-Kiyomizu-dera_in_Kyoto-r.jpg',
+        user_itinerary_summary: "Day 1: 2PM - 3:30PM",
+        tour_package_name: "Standard Package",
         facts: <LocationFact>[
           LocationFact(
               title: 'Summary',
@@ -53,6 +59,8 @@ mixin MockLocation implements Location {
         name: 'Kinkaku-ji',
         url:
             'https://www.asisbiz.com/Japan/Kinkaku-ji/images/0-Postcards-Kinkaku-ji-Winter.jpg',
+        user_itinerary_summary: "Day 1: 2PM - 3:30PM",
+        tour_package_name: "Standard Package",
         facts: <LocationFact>[
           LocationFact(
               title: 'Summary',
@@ -67,6 +75,8 @@ mixin MockLocation implements Location {
         id: 5,
         name: 'Odaiba',
         url: 'https://www.yhunter.ru/wp-content/uploads/2015/06/DSC1876.jpg',
+        user_itinerary_summary: "Day 1: 2PM - 3:30PM",
+        tour_package_name: "Standard Package",
         facts: <LocationFact>[
           LocationFact(
               title: 'Summary',
