@@ -5,6 +5,7 @@ import 'package:lesson4/location_detail.dart';
 import 'package:lesson4/widgets/banner_image.dart';
 import 'package:lesson4/widgets/default_app_bar.dart';
 import 'package:lesson4/widgets/location_tile.dart';
+import 'netword_services/api_service.dart';
 import 'models/location.dart';
 import 'utills/style.dart';
 
@@ -29,7 +30,7 @@ class _LocationListState extends State<LocationList> {
     if (mounted) {
       setState(() => loading = true);
       Timer(const Duration(milliseconds: 4000), () async {
-        final locations = await Location.fetchAll();
+        final locations = await ApiService.fetchAll();
         setState(() {
           this.locations = locations;
           loading = false;
@@ -41,9 +42,7 @@ class _LocationListState extends State<LocationList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: DefaultAppBar(),
-      ),
+      appBar: DefaultAppBar(),
       body: RefreshIndicator(
         onRefresh: loadData,
         child: Column(
