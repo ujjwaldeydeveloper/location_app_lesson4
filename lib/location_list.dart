@@ -2,12 +2,33 @@ import 'package:flutter/material.dart';
 import 'package:lesson4/location_detail.dart';
 import 'models/location.dart';
 import 'utills/style.dart';
-import 'location_detail.dart';
 
-class LocationList extends StatelessWidget {
-  final List<Location> location;
+class LocationList extends StatefulWidget {
+  const LocationList({super.key});
 
-  const LocationList(this.location, {super.key});
+  @override
+  createState() => _LocationListState();
+}
+
+class _LocationListState extends State<LocationList> {
+  List<Location> locations = [];
+
+  @override
+  void initState() {
+    super.initState();
+    loadData();
+    print("CR-> intistate ${locations}");
+  }
+
+  loadData() async {
+    final locations = await Location.fetchAll();
+    print("loadData locations $locations");
+    if (this.mounted) {
+      setState(() {
+        this.locations = locations;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,38 +40,45 @@ class LocationList extends StatelessWidget {
         ),
       ),
       body: ListView.builder(
-        itemCount: location.length,
+        itemCount: locations.length,
         itemBuilder: _listViewItemBuilder,
       ),
     );
   }
 
-  Widget _listViewItemBuilder(BuildContext context,int index, ) {
+  Widget _listViewItemBuilder(BuildContext context, int index) {
+    final location = this.locations[index];
     return ListTile(
-          contentPadding: const EdgeInsets.all(10),
-          leading: _itemThumbnail(location[index]),
-          title: _itemTitle(location[index]),
-          onTap: () => _navigationToLocationDetails(context, index),
-        );
+      contentPadding: const EdgeInsets.all(10),
+      leading: _itemThumbnail(location),
+      title: _itemTitle(location),
+      onTap: () => _navigationToLocationDetails(context, location.id),
+    );
   }
 
   void _navigationToLocationDetails(BuildContext context, int index) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => LocationDetail(location[index]),
+        builder: (context) => LocationDetail(index),
       ),
     );
   }
 
   Widget _itemThumbnail(Location location) {
-    return Container(
-      constraints: const BoxConstraints.tightFor(width: 100.0),
-      child: Image.network(
-        location.url,
-        fit: BoxFit.fitHeight,
-      ),
-    );
+    if (location.url.isEmpty) {
+      return Container();
+    }
+
+    try {
+      return Container(
+        constraints: BoxConstraints.tightFor(height: 100.0),
+        child: Image.network(location.url, fit: BoxFit.fitWidth),
+      );
+    } catch (e) {
+      print("could not load image ${location.url}");
+      return Container();
+    }
   }
 
   Widget _itemTitle(Location location) {

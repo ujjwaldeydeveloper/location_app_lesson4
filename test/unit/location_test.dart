@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'package:test/test.dart';
-import '../../lib/models/location.dart';
+import 'package:lesson4/models/location.dart';
 
 void main() {
   test('test /locations and /locations/:id', () async {
-    final locations = await Location.futureFetchAll();
+    final locations = await Location.fetchAll();
     for (var location in locations) {
       expect(location.id, greaterThan(0));
       expect(location.name, hasLength(greaterThan(0)));

@@ -2,10 +2,36 @@ import 'package:flutter/material.dart';
 import 'models/location.dart';
 import 'utills/style.dart';
 
-class LocationDetail extends StatelessWidget {
-  final Location location;
+class LocationDetail extends StatefulWidget {
+  final int locationID;
 
-  const LocationDetail(this.location, {super.key});
+  const LocationDetail(this.locationID, {super.key});
+
+  @override
+  State<LocationDetail> createState() => _LocationDetailState(this.locationID);
+}
+
+class _LocationDetailState extends State<LocationDetail> {
+  final int locationID;
+  Location location = Location.blank();
+
+  _LocationDetailState(this.locationID);
+
+  @override
+  void initState() {
+    super.initState();
+    loadData();
+  }
+
+  loadData() async {
+    final location = await Location.fetchByID(this.locationID);
+
+    if (mounted) {
+      setState(() {
+        this.location = location;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,9 +60,9 @@ class LocationDetail extends StatelessWidget {
 
   List<Widget> _renderFacts(BuildContext context, Location location) {
     var result = <Widget>[];
-    for (int i = 0; i < location.facts.length; i++) {
-      result.add(_sectionTitle(location.facts[i].title));
-      result.add(_sectionText(location.facts[i].text));
+    for (int i = 0; i < (location.facts?.length ?? 2); i++) {
+      result.add(_sectionTitle(location.facts?[i].title ?? "default"));
+      result.add(_sectionText(location.facts?[i].text ?? "default"));
     }
     return result;
   }
@@ -61,12 +87,18 @@ class LocationDetail extends StatelessWidget {
   }
 
   Widget _bannerImage(String url, double height) {
-    return Container(
-      constraints: BoxConstraints.tightFor(height: height),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Image.network(url, fit: BoxFit.fill),
-      ),
-    );
+    if (url.isEmpty) {
+      return Container();
+    }
+
+    try {
+      return Container(
+        constraints: BoxConstraints.tightFor(height: height),
+        child: Image.network(url, fit: BoxFit.fitWidth),
+      );
+    } catch (e) {
+      print("could not load image $url");
+      return Container();
+    }
   }
 }

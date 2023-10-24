@@ -7,7 +7,7 @@ class App extends StatelessWidget {
   const App({super.key});
   @override
   Widget build(BuildContext context) {
-    final List<Location> mockLocation = MockLocation.fetchAll();
-    return MaterialApp(home: LocationList(mockLocation));
+    // final List<Location> mockLocation = MockLocation.fetchAll();
+    return const MaterialApp(home: LocationList());
   }
 }
