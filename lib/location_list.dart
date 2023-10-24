@@ -22,7 +22,7 @@ class _LocationListState extends State<LocationList> {
     loadData();
   }
 
-  loadData() async {
+  Future<void> loadData() async {
     if (mounted) {
       setState(() => loading = true);
       Timer(const Duration(milliseconds: 4000), () async {
@@ -44,11 +44,14 @@ class _LocationListState extends State<LocationList> {
           style: Style.hearderLarge,
         ),
       ),
-      body: Column(
-        children: [
-          renderProgressBar(context),
-          Expanded(child: renderListView(context)),
-        ],
+      body: RefreshIndicator(
+        onRefresh: loadData,
+        child: Column(
+          children: [
+            renderProgressBar(context),
+            Expanded(child: renderListView(context)),
+          ],
+        ),
       ),
     );
   }
