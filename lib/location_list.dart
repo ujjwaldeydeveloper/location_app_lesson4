@@ -7,7 +7,6 @@ import 'package:lesson4/widgets/default_app_bar.dart';
 import 'package:lesson4/widgets/location_tile.dart';
 import 'netword_services/api_service.dart';
 import 'models/location.dart';
-import 'utills/style.dart';
 
 class LocationList extends StatefulWidget {
   const LocationList({super.key});
